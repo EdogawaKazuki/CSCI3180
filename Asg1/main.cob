@@ -267,8 +267,6 @@
 
        PROCEDURE DIVISION.
        MAIN-PARAGRAPH.
-           DISPLAY '\r' CR 'CR'
-           DISPLAY 'CR'
            OPEN OUTPUT RECORDTST.
            OPEN INPUT EMPLOYEES.
            OPEN INPUT MONTHLY-ATTENDANCE.
@@ -332,7 +330,6 @@
                TO EMPLOYEEREC-ABSENT-SUM
                WRITE EMPLOYEEREC
                END-WRITE
-               DISPLAY EMPLOYEEREC
                GO TO READ-EMPLOYEES
            END-IF.
            
@@ -342,6 +339,12 @@
                MOVE WS-ATTENDANCE-ID TO EMPLOYEEREC-ID
                READ RECORDTST RECORD INTO WS-EMPLOYEEREC
                KEY IS EMPLOYEEREC-ID
+               IF RECORD-DATE-DAY = 01
+                   MOVE 0 TO EMPLOYEEREC-LATE-SUM
+                   MOVE 0 TO EMPLOYEEREC-OVERTIME
+                   MOVE 0 TO EMPLOYEEREC-ABSENT-SUM
+               END-IF
+                   
                IF WS-ATTENDANCE-TYPE='ARRIVE' THEN
                    MOVE 1 TO EMPLOYEEREC-ARRIVE
                    MOVE WS-ATTENDANCE-TIME-HR TO WS-LATE-HR
@@ -366,6 +369,9 @@
                            ADD WS-ATTENDANCE-OVERTIME 
                            TO EMPLOYEEREC-OVERTIME 
                            GIVING EMPLOYEEREC-OVERTIME
+                           IF EMPLOYEEREC-OVERTIME > 30
+                           MOVE 30 TO EMPLOYEEREC-OVERTIME
+                           END-IF
                        END-IF
                    END-IF
                END-IF
@@ -395,121 +401,121 @@
        WRITE-DATE.
            IF RECORD-DATE-MONTH = 1
                IF RECORD-DATE-DAY < 10
-               STRING 'January 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'January 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'January 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'January 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 2
                IF RECORD-DATE-DAY < 10
-               STRING 'February 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'February 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'February 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'February 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 3
                IF RECORD-DATE-DAY < 10
-               STRING 'March 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'March 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'March 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'March 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 4
                IF RECORD-DATE-DAY < 10
-               STRING 'April 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'April 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'April 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'April 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 5
                IF RECORD-DATE-DAY < 10
-               STRING 'May 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'May 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'May 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'May 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 6
                IF RECORD-DATE-DAY < 10
-               STRING 'June 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'June 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'June 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'June 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 7
                IF RECORD-DATE-DAY < 10
-               STRING 'July 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'July 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'July 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'July 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 8
                IF RECORD-DATE-DAY < 10
-               STRING 'August 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'August 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'August 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'August 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 9
                IF RECORD-DATE-DAY < 10
-               STRING 'September 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'September 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'September 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'September 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 10
                IF RECORD-DATE-DAY < 10
-               STRING 'October 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'October 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'October 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'October 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 11
                IF RECORD-DATE-DAY < 10
-               STRING 'November 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'November 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'November 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'November 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF
            IF RECORD-DATE-MONTH = 12
                IF RECORD-DATE-DAY < 10
-               STRING 'December 'RECORD-DATE-DAY2', 'RECORD-DATE-YR CR
+               STRING 'December 'RECORD-DATE-DAY2', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
                IF RECORD-DATE-DAY >= 10
-               STRING 'December 'RECORD-DATE-DAY', 'RECORD-DATE-YR CR
+               STRING 'December 'RECORD-DATE-DAY', 'RECORD-DATE-YR
                INTO SUMMARY-DATE-VALUE
                END-IF
            END-IF.
@@ -518,7 +524,6 @@
            MOVE 'Daily Attendance Summary' TO SUMMARY-T
            MOVE CR TO SUMMARY-T-CR
            WRITE SUMMARY-T
-
            MOVE '                        ' TO SUMMARY-DATE
            MOVE 'Date: ' TO SUMMARY-DATE-T
            PERFORM WRITE-DATE.
@@ -527,7 +532,7 @@
            
            MOVE 
             'Staff-ID Name                            Department Status'
-           TO SUMMARY-RECORD-T
+           TO SUMMARY-RECORD-T-T
            MOVE CR TO SUMMARY-RECORD-T-CR
            WRITE SUMMARY-RECORD-T
 
@@ -638,10 +643,10 @@
                            MOVE 'PRESENT   ' TO SUMMARY-RECORDS-STATUS
                        END-IF
                    END-IF
-                   MOVE CR TO SUMMARY-RECORDS-CR
-                   WRITE SUMMARY-RECORDS
-                   END-WRITE
                END-IF
+               MOVE CR TO SUMMARY-RECORDS-CR
+               WRITE SUMMARY-RECORDS
+               END-WRITE
                GO TO WRITE-SUMMARY-RECORD
            END-IF.
        CHECK-FLAG.
